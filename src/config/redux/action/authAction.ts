@@ -59,8 +59,6 @@ const regisAuth = ({
         .doc(authInfo.user.uid)
         .set({name, phone, createdAt: date});
 
-      await auth().signOut();
-
       return 'success';
     } catch (error) {}
   };

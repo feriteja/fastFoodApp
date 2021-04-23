@@ -66,7 +66,6 @@ const home = () => {
           const changelID = change.doc.id;
           notifCreateChanel(changelID);
           if (change.type === 'modified') {
-            console.log(change.doc.id);
             change.doc.data().status === 'success'
               ? showNotif({
                   changelID: changelID,
@@ -86,7 +85,6 @@ const home = () => {
       });
 
     return () => {
-      console.log('invokCoba');
       dispatch(clearItemList);
       dispatch(clearCart);
       // listenOrder();
@@ -124,7 +122,7 @@ const home = () => {
           <View>
             <Text style={{fontSize: 16}}>Find your</Text>
             <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-              favourite foods
+              Favourite foods
             </Text>
           </View>
           <TouchableOpacity

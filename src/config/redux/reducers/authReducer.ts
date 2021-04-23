@@ -9,7 +9,6 @@ export default function (state = initialState, action: AnyAction) {
       return {info: action.payload};
 
     case ActionState.LOGINAUTH:
-      console.log(action.payload);
       return {info: action.payload};
 
     case ActionState.LOGOUTAUTH:

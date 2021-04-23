@@ -12,6 +12,13 @@ import {Faq, Home, OrderHistory, Settings, Support} from '@screens';
 import {useNavigation} from '@react-navigation/core';
 import {useDispatch} from 'react-redux';
 import {logOut} from '@redux/action/authAction';
+import Animated, {
+  Extrapolate,
+  interpolateNode,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+
+const AniTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 const {width, height} = Dimensions.get('screen');
 
@@ -22,15 +29,32 @@ const CusDrawerItem = ({title = '', navigate = 'home', ...props}) => {
 
   const isFocus = props?.state?.index == props.idx;
 
+  const tranX = interpolateNode(props.progress, {
+    inputRange: [0, 1],
+    outputRange: [-100 * props.idx - 250, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  const screenStyle = {
+    transform: [
+      {
+        translateX: tranX,
+      },
+    ],
+  };
+
   return (
-    <TouchableOpacity
-      style={{
-        backgroundColor: isFocus ? '#EC5156' : 'transparent',
-        width: width / 2,
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-      }}
+    <AniTouchableOpacity
+      style={[
+        {
+          backgroundColor: isFocus ? '#EC5156' : 'transparent',
+          width: width / 2,
+          borderRadius: 10,
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+        },
+        screenStyle,
+      ]}
       onPress={() => {
         navigation.navigate(navigate);
       }}>
@@ -42,7 +66,7 @@ const CusDrawerItem = ({title = '', navigate = 'home', ...props}) => {
         }}>
         {title}
       </Text>
-    </TouchableOpacity>
+    </AniTouchableOpacity>
   );
 };
 
@@ -56,38 +80,70 @@ const DrawerContent = props => {
     navigation.reset({index: 0, routes: [{name: 'auth'}]});
   };
 
+  const tranX = interpolateNode(props.progress, {
+    inputRange: [0, 1],
+    outputRange: [-100 * 6 - 250, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  const screenStyle = {
+    transform: [
+      {
+        translateX: tranX,
+      },
+    ],
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.content}>
-        <CusDrawerItem title={'Home'} navigate={'home'} idx={0} {...props} />
         <CusDrawerItem
+          progress={props.progress}
+          title={'Home'}
+          navigate={'home'}
+          idx={0}
+          {...props}
+        />
+        <CusDrawerItem
+          progress={props.progress}
           title={'Order History'}
           navigate={'orderHistory'}
           idx={1}
           {...props}
         />
         <CusDrawerItem
+          progress={props.progress}
           title={'Settings'}
           navigate={'settings'}
           idx={2}
           {...props}
         />
-        <CusDrawerItem title={'Faq'} navigate={'faq'} idx={3} {...props} />
         <CusDrawerItem
+          progress={props.progress}
           title={'Support'}
           navigate={'support'}
+          idx={3}
+          {...props}
+        />
+        <CusDrawerItem
+          progress={props.progress}
+          title={'Faq'}
+          navigate={'faq'}
           idx={4}
           {...props}
         />
-        <TouchableOpacity
+        <AniTouchableOpacity
           onPress={() => logOutHandler()}
-          style={{
-            marginTop: 20,
-            width: width / 2,
-            borderRadius: 10,
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-          }}>
+          style={[
+            {
+              marginTop: 20,
+              width: width / 2,
+              borderRadius: 10,
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+            },
+            screenStyle,
+          ]}>
           <Text
             style={{
               fontWeight: 'bold',
@@ -96,18 +152,21 @@ const DrawerContent = props => {
             }}>
             Logout
           </Text>
-        </TouchableOpacity>
+        </AniTouchableOpacity>
       </View>
-      <Image
+      <Animated.Image
         source={require('@assets/icon/png/011-burger.png')}
-        style={{
-          position: 'absolute',
-          bottom: 30,
-          right: 10,
-          height: (width * 2) / 3,
-          width: (width * 2) / 3,
-          resizeMode: 'contain',
-        }}
+        style={[
+          {
+            position: 'absolute',
+            bottom: 30,
+            right: 10,
+            height: (width * 2) / 3,
+            width: (width * 2) / 3,
+            resizeMode: 'contain',
+          },
+          screenStyle,
+        ]}
       />
     </View>
   );
@@ -121,8 +180,8 @@ const main = () => {
       <Drawer.Screen name="home" component={Home} />
       <Drawer.Screen name="orderHistory" component={OrderHistory} />
       <Drawer.Screen name="settings" component={Settings} />
-      <Drawer.Screen name="faq" component={Faq} />
       <Drawer.Screen name="support" component={Support} />
+      <Drawer.Screen name="faq" component={Faq} />
     </Drawer.Navigator>
   );
 };

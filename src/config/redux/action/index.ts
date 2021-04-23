@@ -1,0 +1,13 @@
+export const CHECK_AUTH = 'CHECK_AUTH';
+export const LOGINAUTH = 'LOGINAUTH';
+export const LOGOUTAUTH = 'LOGOUTAUTH';
+export const GETITEM = 'GETITEM';
+export const GETSPECLIST = 'GETSPECLIST';
+export const CLEAR_ITEM = 'CLEAR_ITEM';
+export const COUNT_CART = 'COUNT_CART';
+export const CLEAR_CART = 'CLEAR_CART';
+export const UPDATE_COUNT = 'UPDATE_COUNT';
+export const ALL_PROCESS = 'ALL_PROCESS';
+export const ON_PROCESS = 'ON_PROCESS';
+export const END_PROCESS = 'END_PROCESS';
+export const CLEAR_PROCESS = 'CLEAR_PROCESS';

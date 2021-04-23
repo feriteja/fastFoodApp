@@ -1,0 +1,15 @@
+export {default as Forgot} from './auth/forgot';
+export {default as Register} from './auth/register';
+export {default as Login} from './auth/login';
+export {default as ConfirmMail} from './auth/confirmMail';
+export {default as ShowMap} from './map/showMap';
+export {default as Faq} from './main/faq';
+export {default as Home} from './main/home';
+export {default as OrderHistory} from './main/history/orderHistory';
+export {default as OrderHistoryDetail} from './main/history/orderHistoryDetail';
+export {default as Settings} from './main/settings';
+export {default as Support} from './main/support';
+export {default as Search} from './main/stack/search';
+export {default as ConfirmCheckout} from './main/stack/confirm';
+export {default as DetailOrder} from './main/stack/detailOrder';
+export {default as SuccessProcessed} from './main/stack/successProcessed';
